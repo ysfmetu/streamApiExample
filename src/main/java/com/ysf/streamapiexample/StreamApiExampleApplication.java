@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.time.Clock;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,7 +42,30 @@ public class StreamApiExampleApplication {
         List<Student> listGoodStudentsWithStream=listStudents.stream()
                 .filter(x->x.getScore()>=70)
                 .collect(Collectors.toList());
-       listGoodStudentsWithStream.stream().forEach(System.out::println);
+       listGoodStudentsWithStream.forEach(System.out::println);
+
+       //Ortalamayı bulmak istersek --- klasik yöntem ile
+        System.out.println("-----------------------------------------");
+        double sum=0.0;
+        for (Student student:listStudents){
+            sum +=student.getScore();
+        }
+        double average=sum/listStudents.size();
+        System.out.println("sınıf ortalaması =" +average);
+        System.out.println("stream kullanılarak bulunan sonuç");
+        double avg =listStudents.stream().mapToInt(x -> x.getScore())
+                .average().getAsDouble();
+        System.out.println("stream ile alınan ortalama =" +avg);
+        System.out.println("-----------------------------------------");
+
+        List<Student> top3List=listStudents.stream()
+                .filter(x -> x.getScore()>70)
+                .limit(5)
+                .sorted()
+                .collect(Collectors.toList());
+        System.out.println("en yüksek puan alan öğrenci listesi");
+        top3List.stream().sorted().forEach(System.out::println);
+
 
 
 
