@@ -64,7 +64,7 @@ public class StreamApiExampleApplication {
                 .sorted()
                 .collect(Collectors.toList());
         System.out.println("en yüksek puan alan öğrenci listesi");
-        top3List.stream().sorted().forEach(System.out::println);
+        top3List.stream().map(x->x.getScore()).sorted(Comparator.reverseOrder()).forEach(point -> System.out.println(point));
 
 
 
